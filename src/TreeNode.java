@@ -1,7 +1,4 @@
-import com.sun.source.tree.Tree;
-
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 import java.util.Stack;
 
@@ -18,16 +15,15 @@ public class TreeNode {
 
 class BinaryTree{
     TreeNode root;
-    List<Integer> list = new LinkedList<>();
+    //List<Integer> list = new LinkedList<>();
 
     public void inOrderTraversalRecursion(TreeNode node) {
-        TreeNode current = node;
-        if (current == null) {
+        if (node == null) {
             return;
         }
-        inOrderTraversalRecursion(current.left);
-        System.out.print(current.data + "-");
-        inOrderTraversalRecursion(current.right);
+        inOrderTraversalRecursion(node.left);
+        System.out.print(node.data + "-");
+        inOrderTraversalRecursion(node.right);
     }
 
     public void inOrderTraversalIteratively(TreeNode node){
@@ -88,13 +84,13 @@ class BinaryTree{
     }
 //
     public void preOrderTraversal(TreeNode node) {
-        Stack<TreeNode> stack = new Stack<TreeNode>();
+        Stack<TreeNode> stack = new Stack<>();
         if (node == null) {
             return;
         }
 
         stack.push(node);
-        while (stack.empty() == false) {
+        while (!stack.empty()) {
             TreeNode current = stack.pop();
             System.out.print(current.data + "-");
             if (current.right != null) {
@@ -124,7 +120,7 @@ class BinaryTree{
             return;
         }
         stack.push(node);
-        while(stack.isEmpty() == false){
+        while(!stack.isEmpty()){
             TreeNode element = stack.pop();
             output.push(element.data);
 
@@ -147,7 +143,7 @@ class BinaryTree{
         Queue<TreeNode> queue = new LinkedList<>();
         queue.add(node);
         queue.add(null);
-        while(queue.isEmpty() == false){
+        while(!queue.isEmpty()){
             TreeNode curr = queue.remove();
             if(curr == null){
                 System.out.println();
@@ -177,7 +173,7 @@ class BinaryTree{
         queue.add(node);
         queue.add(null);
 
-        while(queue.isEmpty() == false){
+        while(!queue.isEmpty()){
             TreeNode current = queue.remove();
             if(current == null){
                 System.out.println();
