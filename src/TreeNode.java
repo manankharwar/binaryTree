@@ -1,3 +1,4 @@
+import javax.sound.sampled.Line;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
@@ -198,6 +199,60 @@ class BinaryTree{
         return count;
     }
 
+    public int sumOfNodes(TreeNode node){
+        int sum = 0;
+        if(node == null){
+            return 0;
+        }
+        // I'll be using In-order Traversal (DFS) to iterate through the entire binary tree's nodes and calculate the sum, finally, will be returning it
+        Stack<TreeNode> stack = new Stack<>();
+
+        TreeNode current = node;
+
+        while(current != null || stack.size() != 0) {
+            while (current != null) {
+                stack.push(current);
+                current = current.left;
+            }
+            current = stack.pop();
+            sum += current.data;
+            current = current.right;
+        }
+        return sum;
+    }
+
+    public int heightOfTree(TreeNode node){
+        int height = 0;
+        // use the level-order traversal to solve this question (BFS)
+        Queue<TreeNode> queue = new LinkedList<>();
+
+        queue.add(node);
+        queue.add(null);
+
+        while(!queue.isEmpty()){
+            TreeNode current = queue.remove();
+            if(current == null){
+                //System.out.println();
+                height += 1;
+                if(queue.isEmpty()){
+                    break;
+                }
+                else{
+                    queue.add(null);
+                }
+            }
+            else{
+                //System.out.print(current.data + "-");
+                if(current.left != null){
+                    queue.add(current.left);
+                }
+                if(current.right != null){
+                    queue.add(current.right);
+                }
+            }
+        }
+        return height;
+    }
 
     public static void main(String[] args){
         BinaryTree tree = new BinaryTree();
@@ -243,8 +298,20 @@ class BinaryTree{
         tree.levelOrderTraversal(tree.root);
         System.out.println();
         System.out.println("-------------------------------");
-        System.out.println("Number of Nodes");
+        System.out.println("Level-Order traversal using Iteration");
         int count = tree.numberOfNodes(tree.root);
         System.out.println(count);
+        System.out.println();
+        System.out.println("-------------------------------");
+        System.out.println("sumOfNodes using Iteration");
+        int sum = tree.sumOfNodes(tree.root);
+        System.out.println(sum);
+        System.out.println();
+        System.out.println("-------------------------------");
+        System.out.println("heightOfTree using Iteration");
+        int height = tree.heightOfTree(tree.root);
+        System.out.println(height);
+
+
     }
 }
