@@ -2,6 +2,7 @@ import com.sun.source.tree.Tree;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Stack;
 
 public class TreeNode {
@@ -142,6 +143,33 @@ class BinaryTree{
         }
     }
 
+    public void levelOrderTraversal(TreeNode node){
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(node);
+        queue.add(null);
+        while(queue.isEmpty() == false){
+            TreeNode curr = queue.remove();
+            if(curr == null){
+                System.out.println();
+                if(queue.isEmpty()){
+                    break;
+                }
+                else{
+                    queue.add(null);
+                }
+            }
+            else{
+                System.out.print(curr.data + "-");
+                if(curr.left != null){
+                    queue.add(curr.left);
+                }
+                if(curr.right != null){
+                    queue.add(curr.right);
+                }
+            }
+        }
+    }
+
     public static void main(String[] args){
         BinaryTree tree = new BinaryTree();
         tree.root = new TreeNode(1);
@@ -180,5 +208,9 @@ class BinaryTree{
         System.out.println("-------------------------------");
         System.out.println("Post-Order traversal using Iteration");
         tree.postorderTraversalUsingIteration(tree.root);
+        System.out.println();
+        System.out.println("-------------------------------");
+        System.out.println("Level-Order traversal using Iteration");
+        tree.levelOrderTraversal(tree.root);
     }
 }
