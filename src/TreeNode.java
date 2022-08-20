@@ -170,6 +170,39 @@ class BinaryTree{
         }
     }
 
+    public int numberOfNodes(TreeNode node){
+        // can we use level Traversal for this? YES
+        int count = 0;
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(node);
+        queue.add(null);
+
+        while(queue.isEmpty() == false){
+            TreeNode current = queue.remove();
+            if(current == null){
+                System.out.println();
+                if(queue.isEmpty()){
+                    break;
+                }
+                else{
+                    queue.add(null);
+                }
+            }
+            else{
+                System.out.print(current.data + "-");
+                count++;
+                if(current.left != null){
+                    queue.add(current.left);
+                }
+                if(current.right != null){
+                    queue.add((current.right));
+                }
+            }
+        }
+        return count;
+    }
+
+
     public static void main(String[] args){
         BinaryTree tree = new BinaryTree();
         tree.root = new TreeNode(1);
@@ -212,5 +245,10 @@ class BinaryTree{
         System.out.println("-------------------------------");
         System.out.println("Level-Order traversal using Iteration");
         tree.levelOrderTraversal(tree.root);
+        System.out.println();
+        System.out.println("-------------------------------");
+        System.out.println("Number of Nodes");
+        int count = tree.numberOfNodes(tree.root);
+        System.out.println(count);
     }
 }
