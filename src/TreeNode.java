@@ -254,6 +254,56 @@ class BinaryTree{
         return height;
     }
 
+    static class TreeInfo{
+        int height;
+        int diameter;
+
+        TreeInfo(int height, int diameter){
+            this.diameter = diameter;
+            this.height = height;
+        }
+    }
+
+    public TreeInfo diameterOfTheTree(TreeNode node){
+        // we have three cases to consider
+        /*
+                  1
+                 / \
+                2   3
+               / \ / \
+              4  5 6  7
+             /      \
+            /        \
+           8          9
+
+        Case 1: we calculate the left-subtree from thr root
+        Case 2: we calculate the right-subtree from thr root
+        Case 3: we calculate the left-most skewed tree + right-most skewed tree + 1
+        FIND MAX -> O(N^2)
+
+
+
+        */
+
+        if(node == null){
+            return new TreeInfo(0,0);
+        }
+        // this approach gives us O(N)
+        TreeInfo left = diameterOfTheTree(node.left);
+        TreeInfo right = diameterOfTheTree(node.right);
+
+        int myHeight = Math.max(left.height, right.height) + 1;
+
+        int diameter1 = left.diameter;
+        int diameter2 = right.diameter;
+        int diameter3 = left.height + right.height + 1;
+
+        int result = Math.max(diameter1, Math.max(diameter2, diameter3));
+
+        TreeInfo result_info = new TreeInfo(myHeight, result);
+        return result_info;
+    }
+
     public static void main(String[] args){
         BinaryTree tree = new BinaryTree();
         tree.root = new TreeNode(1);
@@ -311,7 +361,11 @@ class BinaryTree{
         System.out.println("heightOfTree using Iteration");
         int height = tree.heightOfTree(tree.root);
         System.out.println(height);
-
+        System.out.println();
+        System.out.println("-------------------------------");
+        System.out.println("diameterOfTheTree using Iteration");
+        int answer = tree.diameterOfTheTree(tree.root).diameter;
+        System.out.println(answer);
 
     }
 }
