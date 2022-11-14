@@ -16,7 +16,6 @@ public class TreeNode {
 
 class BinaryTree{
     TreeNode root;
-    //List<Integer> list = new LinkedList<>();
 
     public void inOrderTraversalRecursion(TreeNode node) {
         if (node == null) {
@@ -221,7 +220,19 @@ class BinaryTree{
         return sum;
     }
 
-    public int heightOfTree(TreeNode node){
+    public int heightOfTreeUsingRecursion(TreeNode node){
+        int height = 0;
+
+        if(node == null){
+            return 0;
+        }
+
+        height = 1 + Math.max(heightOfTreeUsingRecursion(node.left), heightOfTreeUsingRecursion(node.right));
+
+        return height;
+    }
+
+    public int heightOfTree(TreeNode node){ // using level-order traversal
         int height = 0;
         // use the level-order traversal to solve this question (BFS)
         Queue<TreeNode> queue = new LinkedList<>();
@@ -304,6 +315,28 @@ class BinaryTree{
         return result_info;
     }
 
+    public int balanceBinarytree(TreeNode root){
+        if(root == null){
+            return 0;
+        }
+
+        int leftBalancedTree = balanceBinarytree(root.left);
+        if(leftBalancedTree == -1){
+            return -1;
+        }
+
+        int rightBalancedTree = balanceBinarytree(root.right);
+        if(rightBalancedTree == -1){
+            return -1;
+        }
+
+        if(Math.abs(leftBalancedTree - rightBalancedTree) > 1){
+            return -1;
+        }
+        return (Math.max(leftBalancedTree, rightBalancedTree) + 1);
+    }
+
+
     public static void main(String[] args){
         BinaryTree tree = new BinaryTree();
         tree.root = new TreeNode(1);
@@ -362,10 +395,19 @@ class BinaryTree{
         int height = tree.heightOfTree(tree.root);
         System.out.println(height);
         System.out.println();
+        System.out.println("heightOfTree using Recursion");
+        int heightUsingRecursion = tree.heightOfTree(tree.root);
+        System.out.println(heightUsingRecursion);
+        System.out.println();
         System.out.println("-------------------------------");
         System.out.println("diameterOfTheTree using Iteration");
         int answer = tree.diameterOfTheTree(tree.root).diameter;
         System.out.println(answer);
+        System.out.println("-------------------------------");
+        System.out.println("Balanced Binary tree or not?    ");
+        int balance = tree.balanceBinarytree(tree.root);
+        System.out.println(balance);
+        System.out.println();
 
     }
 }
